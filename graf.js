@@ -55,7 +55,7 @@
         },
         },
         subtitle: {
-        text: `Aktualizováno jednou týdně ve čtvrtek`,
+        text: `Počty plánovaně naočkovaných se vztahují ke konci předchozího měsíce. Aktualizováno jednou týdně ve čtvrtek`,
         align: 'left',
         useHTML: true,
         },
