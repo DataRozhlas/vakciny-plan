@@ -36,6 +36,8 @@
         },
     });
 
+    const czMonths = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
+
     const chart = Highcharts.chart('covi_vak_plan', {
         chart: {
             type: 'area',
@@ -55,9 +57,9 @@
         },
         },
         subtitle: {
-        text: `Počty plánovaně naočkovaných se vztahují ke konci předchozího měsíce. Aktualizováno jednou týdně ve čtvrtek`,
-        align: 'left',
-        useHTML: true,
+            text: `Počty plánovaně naočkovaných se vztahují ke konci měsíce. Aktualizováno jednou týdně ve čtvrtek`,
+            align: 'left',
+            useHTML: true,
         },
         xAxis: {
             type: "datetime",
@@ -72,10 +74,22 @@
         },
         tooltip: {
             backgroundColor: '#ffffffee',
-            headerFormat: '<span style="font-size:0.8rem"><b>Celkem v měsíci {point.key}</b></span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>'
-                            + '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
-            footerFormat: '</table>',
+            formatter: function() {
+                console.log(this)
+                if (this.color === '#de2d26') { // skutečný stav naočkovaných
+                    const dte = new Date(this.x);
+                    return `Aktuálně naočkovaných ${this.y} (${dte.getDate()}. ${dte.getMonth() + 1}.)`
+                }
+                let brands = ``;
+                this.points.forEach((p) => {
+                    brands += `${p.point.series.options.name}: ${p.y}<br>`
+                })
+                const dte = new Date(this.points[0].x)
+                let mnt = dte.getMonth()
+                if ((mnt === 0) & (dte.getFullYear() === 2021)) { return 'Očkování začalo na přelomu roku' }
+                if ((mnt === 0) & (dte.getFullYear() === 2022)) { mnt = 12; }
+                return `Během <b>${czMonths[mnt - 1]}</b> plánováno očkovaných:<br> ${brands}` 
+            },
             shared: true,
             useHTML: true,
             style: {
