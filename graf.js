@@ -1,10 +1,10 @@
 (function () {
     const plan = [
-        ["Pfizer",138937,180375,213037,240000,240000,240000,250000,250000,250000,0,0,0],
-        ["Moderna",40000,40000,40000,139000,139000,139000,139000,139000,139000,0,0,0],
-        ["AstraZeneca",0,100000,200000,250000,450000,200000,300000,0,0,0,0,0],
-        ["Curevac",0,0,0,11000,11000,11000,29000,29000,29000,36500,36500,36500],
-        ["J&J",0,0,0,185000,185000,185000,400000,400000,400000,83000,83000,83000]
+        ["Pfizer",0,138937,180375,213037,240000,240000,240000,250000,250000,250000,0,0,0],
+        ["Moderna",0,40000,40000,40000,139000,139000,139000,139000,139000,139000,0,0,0],
+        ["AstraZeneca",0,0,100000,200000,250000,450000,200000,300000,0,0,0,0,0],
+        ["Curevac",0,0,0,0,11000,11000,11000,29000,29000,29000,36500,36500,36500],
+        ["J&J",0,0,0,0,185000,185000,185000,400000,400000,400000,83000,83000,83000]
       ]
     
     const data = [];
@@ -29,8 +29,6 @@
         }
     )
 
-
-
     Highcharts.setOptions({
         lang: {
             numericSymbols: [' tis.', ' mil.'],
@@ -40,13 +38,13 @@
 
     const chart = Highcharts.chart('covi_vak_plan', {
         chart: {
-        type: 'area',
-        spacingLeft: 0,
-        spacingRight: 0,
+            type: 'area',
+            spacingLeft: 0,
+            spacingRight: 0,
         },
         credits: {
-        href: 'https://koronavirus.mzcr.cz/wp-content/uploads/2020/12/Strategie_ockovani_proti_covid-19_aktual_221220.pdf',
-        text: 'Zdroj: očkovací strategie',
+            href: 'https://koronavirus.mzcr.cz/wp-content/uploads/2020/12/Strategie_ockovani_proti_covid-19_aktual_221220.pdf',
+            text: 'Zdroj: očkovací strategie',
         },
         colors: ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a', 'lightgray', '#b15928', 'black', '#01665e', '#542788'],
         title: {
@@ -91,6 +89,7 @@
             },
         area: {
             stacking: 'normal',
+            //step: 'left',
             marker: {
                 enabled: false,
                 symbol: 'circle',
