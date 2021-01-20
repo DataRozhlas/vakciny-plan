@@ -70,7 +70,7 @@
                 },
                 },
                 subtitle: {
-                    text: `Počty plánovaně naočkovaných se vztahují ke konci měsíce`,
+                    text: `Počty plánovaně očkovaných se vztahují ke konci měsíce. Počet aktuálně očkovaných se aktualizuje automaticky.`,
                     align: 'left',
                     useHTML: true,
                 },
