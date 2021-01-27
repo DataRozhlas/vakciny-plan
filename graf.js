@@ -1,14 +1,18 @@
 (function () {
 
+    function nice(val) {
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+    }
+
     fetch('https://data.irozhlas.cz/covid-uzis/ockovani_aktual.json')
         .then((response) => response.json())
         .then((curr) => {
             const plan = [
-                ["Pfizer",0,138937,180375,213037,240000,240000,240000,250000,250000,250000,0,0,0],
-                ["Moderna",0,40000,40000,40000,139000,139000,139000,139000,139000,139000,0,0,0],
-                ["AstraZeneca",0,0,100000,200000,250000,450000,200000,300000,0,0,0,0,0],
-                ["Curevac",0,0,0,0,11000,11000,11000,29000,29000,29000,36500,36500,36500],
-                ["J&J",0,0,0,0,185000,185000,185000,400000,400000,400000,83000,83000,83000]
+                ["Pfizer",0,277875,360750,426075,480000,480000,480000,500000,500000,500000,0,0,0],
+                ["Moderna",0,80000,80000,80000,278000,278000,278000,278000,278000,278000,0,0,0],
+                ["AstraZeneca",0,0,200000,400000,500000,900000,400000,600000,0,0,0,0,0],
+                ["Curevac",0,0,0,0,22000,22000,22000,58000,58000,58000,73000,73000,73000],
+                ["J&J",0,0,0,0,185000,185000,185000,400000,400000,400000,83000,83000,83000],
             ]
             
             const data = [];
@@ -31,7 +35,7 @@
 
             data.push(
                 {
-                    name: 'Skutečně naočkovaní',
+                    name: 'Naočkované dávky',
                     data: [current],
                     color: '#de2d26',
                     visible: true,
@@ -70,7 +74,7 @@
                 },
                 },
                 subtitle: {
-                    text: `Počty plánovaně očkovaných se vztahují ke konci měsíce. Počet aktuálně očkovaných se aktualizuje automaticky.`,
+                    text: `Počty plánovaných očkování se vztahují ke konci měsíce. Počet naočkovaných dávek se aktualizuje automaticky.`,
                     align: 'left',
                     useHTML: true,
                 },
@@ -91,17 +95,19 @@
                         console.log(this)
                         if (this.color === '#de2d26') { // skutečný stav naočkovaných
                             const dte = new Date(this.x);
-                            return `Aktuálně naočkovaných ${this.y} (${dte.getDate()}. ${dte.getMonth() + 1}.)`
+                            return `Aktuálně naočkovaných vakcín ${this.y} (${dte.getDate()}. ${dte.getMonth() + 1}.)`
                         }
                         let brands = ``;
+                        let suma = 0;
                         this.points.forEach((p) => {
-                            brands += `${p.point.series.options.name}: ${p.y}<br>`
+                            brands += `${p.point.series.options.name}: ${nice(p.y)}<br>`
+                            suma += p.y
                         })
                         const dte = new Date(this.points[0].x)
                         let mnt = dte.getMonth()
                         if ((mnt === 0) & (dte.getFullYear() === 2021)) { return 'Očkování začalo na přelomu roku' }
                         if ((mnt === 0) & (dte.getFullYear() === 2022)) { mnt = 12; }
-                        return `Během <b>${czMonths[mnt - 1]}</b> plánováno očkovaných:<br> ${brands}` 
+                        return `Během <b>${czMonths[mnt - 1]}</b> plánováno <b>celkem ${nice(suma)}</b> očkování:<br> ${brands}` 
                     },
                     shared: true,
                     useHTML: true,
